@@ -4,11 +4,40 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 class HomePage extends StatelessWidget {
   Future exportPDF() async {
     final pdf = pw.Document();
+    pdf.addPage(
+      pw.MultiPage(
+        pageFormat: PdfPageFormat.a4,
+        build: (pw.Context context) {
+          return [
+            pw.Column(
+              children: [
+                pw.Text("Hola"),
+                pw.Text("Hola"),
+                pw.Text("Hola"),
+                pw.Text("Hola"),
+                pw.Text("Hola"),
+                pw.Text("Hola"),
+                pw.Text("Hola"),
+                pw.Text("Hola"),
+                pw.Text("Hola"),
+                pw.Text("Hola"),
+                pw.Text("Hola"),
+                pw.Text("Hola"),
+                pw.Text("Hola"),
+                pw.Text("Hola"),
+                pw.Text("Hola"),
+              ],
+            )
+          ];
+        },
+      ),
+    );
     Uint8List bytes = await pdf.save();
     print(bytes);
 
@@ -24,6 +53,8 @@ class HomePage extends StatelessWidget {
     OpenFile.open(filename);
   }
 
+  exportExcel() {}
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -37,6 +68,12 @@ class HomePage extends StatelessWidget {
                   exportPDF();
                 },
                 child: Text("PDF"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  exportExcel();
+                },
+                child: Text("EXCEL"),
               ),
             ],
           ),
