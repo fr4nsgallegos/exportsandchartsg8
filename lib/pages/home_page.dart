@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:exportsandchartsg8/charts/chart1_page.dart';
 import 'package:exportsandchartsg8/pages/cart_page.dart';
 import 'package:exportsandchartsg8/pages/profile_page.dart';
 import 'package:flutter/material.dart';
@@ -197,6 +198,17 @@ class HomePage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {},
                 child: Text("go cart"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Chart1Page(),
+                    ),
+                  );
+                },
+                child: Text("CHART 1"),
               ),
             ],
           ),
