@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
@@ -9,6 +10,9 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as excel;
 
 class HomePage extends StatelessWidget {
+  CollectionReference candidateReference =
+      FirebaseFirestore.instance.collection("candidates");
+
   Future exportPDF() async {
     final pdf = pw.Document();
     pdf.addPage(
@@ -92,6 +96,14 @@ class HomePage extends StatelessWidget {
                   exportExcel();
                 },
                 child: Text("EXCEL"),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  QuerySnapshot candidateCollection =
+                      await candidateReference.get();
+                  print(candidateCollection.docs);
+                },
+                child: Text("firestore"),
               ),
             ],
           ),
