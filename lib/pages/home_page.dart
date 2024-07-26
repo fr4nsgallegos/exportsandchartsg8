@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as excel;
+import 'package:syncfusion_officechart/officechart.dart';
 
 class HomePage extends StatelessWidget {
   CollectionReference candidateReference =
@@ -128,6 +129,14 @@ class HomePage extends StatelessWidget {
 
     sheet1.getRangeByIndex(row, 2).setText("total");
     sheet1.getRangeByIndex(row, 3).setFormula("=SUM(C2:C4)");
+
+    final ChartCollection chartCollection = ChartCollection(sheet1);
+
+    final Chart chart = chartCollection.add();
+    chart.chartType = ExcelChartType.pie;
+    chart.dataRange = sheet1.getRangeByName('B1:C4');
+    chart.chartTitle = "RESUMEN DE VOTOS";
+    sheet1.charts = chartCollection;
 
     final List<int> bytes = workbook.saveAsStream();
     workbook.dispose();
