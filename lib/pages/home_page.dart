@@ -6,6 +6,7 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:syncfusion_flutter_xlsio/xlsio.dart' as excel;
 
 class HomePage extends StatelessWidget {
   Future exportPDF() async {
@@ -53,7 +54,24 @@ class HomePage extends StatelessWidget {
     OpenFile.open(filename);
   }
 
-  exportExcel() {}
+  Future exportExcel() async {
+    final workbook = excel.Workbook();
+    final excel.Worksheet sheet = workbook.worksheets[0];
+    sheet.getRangeByName('A1').setText("Hola que tal");
+    sheet.getRangeByIndex(2, 1).setText("este es el A2");
+
+    final List<int> bytes = workbook.saveAsStream();
+    workbook.dispose();
+
+    final String path = (await getApplicationSupportDirectory()).path;
+    final String filename = "$path/myFirstExcel.xlsx";
+
+    // print(path);
+    // print(filename);
+    final File file = File(filename);
+    await file.writeAsBytes(bytes, flush: true);
+    OpenFile.open(filename);
+  }
 
   @override
   Widget build(BuildContext context) {
