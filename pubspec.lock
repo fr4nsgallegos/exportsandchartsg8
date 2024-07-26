@@ -405,6 +405,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "26.2.4"
+  syncfusion_officechart:
+    dependency: "direct main"
+    description:
+      name: syncfusion_officechart
+      sha256: "7e648f2cb2b6cb4cb80fff550bf657410ea12a854c0213dd77a2037dfa01c860"
+      url: "https://pub.dev"
+    source: hosted
+    version: "26.2.4"
   syncfusion_officecore:
     dependency: transitive
     description:

@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -89,6 +90,58 @@ class HomePage extends StatelessWidget {
     OpenFile.open(filename);
   }
 
+  Future exportExcelChart() async {
+    final excel.Workbook workbook = excel.Workbook();
+    final excel.Worksheet sheet1 = workbook.worksheets.addWithName("Chart");
+
+    sheet1.enableSheetCalculations();
+    sheet1.getRangeByName("A1").setText("Partido Político");
+    sheet1.getRangeByIndex(1, 2).setText("Representante");
+    sheet1.getRangeByIndex(1, 3).setText("N votos");
+
+    sheet1.getRangeByIndex(1, 1).columnWidth = 20;
+    sheet1.getRangeByIndex(1, 2).columnWidth = 15;
+
+    sheet1.getRangeByName("A1:A18").rowHeight = 22;
+
+    //agregando estilos
+    final excel.Style style1 = workbook.styles.add("Style1");
+    style1.backColor = '#0078D4';
+    style1.vAlign = excel.VAlignType.center;
+    style1.hAlign = excel.HAlignType.center;
+    style1.bold = true;
+
+    sheet1.getRangeByName("A1:C1").cellStyle = style1;
+
+    QuerySnapshot candidateCollection = await candidateReference.get();
+
+    List<QueryDocumentSnapshot> docs = candidateCollection.docs;
+    int row = 2;
+    List.generate(docs.length, (index) {
+      sheet1.getRangeByIndex(row, 1).setText(docs[index]["nombrePartido"]);
+      sheet1.getRangeByIndex(row, 2).setText(docs[index]["representante"]);
+      sheet1
+          .getRangeByIndex(row, 3)
+          .setNumber(docs[index]["nVotos"].toDouble());
+      row++;
+    });
+
+    sheet1.getRangeByIndex(row, 2).setText("total");
+    sheet1.getRangeByIndex(row, 3).setFormula("=SUM(C2:C4)");
+
+    final List<int> bytes = workbook.saveAsStream();
+    workbook.dispose();
+
+    final String path = (await getApplicationSupportDirectory()).path;
+    final String filename = "$path/myFirstExcel.xlsx";
+
+    // print(path);
+    // print(filename);
+    final File file = File(filename);
+    await file.writeAsBytes(bytes, flush: true);
+    OpenFile.open(filename);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -116,6 +169,12 @@ class HomePage extends StatelessWidget {
                   print(candidateCollection.docs);
                 },
                 child: Text("firestore"),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  exportExcelChart();
+                },
+                child: Text("excel with chart"),
               ),
             ],
           ),
