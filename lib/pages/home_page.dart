@@ -61,9 +61,21 @@ class HomePage extends StatelessWidget {
   Future exportExcel() async {
     final workbook = excel.Workbook();
     final excel.Worksheet sheet = workbook.worksheets[0];
-    sheet.getRangeByName('A1').setText("Hola que tal");
-    sheet.getRangeByIndex(2, 1).setText("este es el A2");
+    sheet.getRangeByName('A1').setText("Partido Político");
+    sheet.getRangeByIndex(1, 2).setText("Representante");
+    sheet.getRangeByIndex(1, 3).setText("N votos");
+    int row = 2;
 
+    QuerySnapshot candidateCollection = await candidateReference.get();
+
+    List<QueryDocumentSnapshot> docs = candidateCollection.docs;
+
+    List.generate(docs.length, (index) {
+      sheet.getRangeByIndex(row, 1).setText(docs[index]["nombrePartido"]);
+      sheet.getRangeByIndex(row, 2).setText(docs[index]["representante"]);
+      sheet.getRangeByIndex(row, 3).setText(docs[index]["nVotos"].toString());
+      row++;
+    });
     final List<int> bytes = workbook.saveAsStream();
     workbook.dispose();
 

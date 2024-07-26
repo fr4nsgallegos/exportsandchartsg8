@@ -9,7 +9,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MaterialApp(
-    home: HomePage(),
-  ));
+  runApp(
+    MaterialApp(
+      home: HomePage(),
+    ),
+  );
 }
