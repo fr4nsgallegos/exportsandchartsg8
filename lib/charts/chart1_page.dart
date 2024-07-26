@@ -25,6 +25,11 @@ class Chart1Page extends StatelessWidget {
     // spots.forEach((elemet) {
     //   print(elemet);
     // });
+    final spots2 = _generateData(300)
+        .asMap()
+        .entries
+        .map((e) => FlSpot(e.key.toDouble(), e.value.valor))
+        .toList();
 
     // print(spots.length);
     return LineChart(
@@ -34,7 +39,12 @@ class Chart1Page extends StatelessWidget {
             spots: spots,
             dotData: FlDotData(show: false),
             color: Colors.red,
-          )
+          ),
+          LineChartBarData(
+            spots: spots2,
+            dotData: FlDotData(show: false),
+            color: Colors.blue,
+          ),
         ],
       ),
     );
