@@ -54,7 +54,7 @@ class Chart1Page extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Char1 Page"),
+        title: Text("Chart1 Page"),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -69,7 +69,8 @@ class Chart1Page extends StatelessWidget {
           Container(
             height: 300,
             child: _graph(),
-          )
+          ),
+          Text("sta es la descipcion")
         ],
       ),
     );
