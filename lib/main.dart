@@ -2,6 +2,7 @@ import 'package:exportsandchartsg8/firebase_options.dart';
 import 'package:exportsandchartsg8/pages/cart_page.dart';
 import 'package:exportsandchartsg8/pages/home_page.dart';
 import 'package:exportsandchartsg8/pages/profile_page.dart';
+import 'package:exportsandchartsg8/utils/local_notification_service.dart';
 import 'package:exportsandchartsg8/utils/notification_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await NotificationService.initMessaging();
+  await initNotifications();
 
   runApp(
     MyApp(),

@@ -5,15 +5,31 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 Future<void> initNotifications() async {
   const AndroidInitializationSettings initializationSettingAndroid =
-      AndroidInitializationSettings('app_icon');
+      AndroidInitializationSettings('@mipmap/ic_launcher');
 
-  const DarwinInitializationSettings initializationSettingsIos =
-      DarwinInitializationSettings();
+  // const DarwinInitializationSettings initializationSettingsIos =
+  //     DarwinInitializationSettings();
 
   const InitializationSettings initializationSettings = InitializationSettings(
     android: initializationSettingAndroid,
-    iOS: initializationSettingsIos,
+    // iOS: initializationSettingsIos,
   );
 
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+}
+
+Future<void> mostrarNotificacion() async {
+  const AndroidNotificationDetails androidNotificationDetails =
+      AndroidNotificationDetails("channe_id", "channel_name");
+
+  const NotificationDetails notificationDetails = NotificationDetails(
+    android: androidNotificationDetails,
+  );
+
+  await flutterLocalNotificationsPlugin.show(
+    0,
+    "Título de notificación",
+    "Esto es una prueba de notificaion local ",
+    notificationDetails,
+  );
 }

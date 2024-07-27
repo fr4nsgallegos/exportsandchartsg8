@@ -7,6 +7,7 @@ import 'package:exportsandchartsg8/charts/chart2_page.dart';
 import 'package:exportsandchartsg8/charts/chart3_page.dart';
 import 'package:exportsandchartsg8/pages/cart_page.dart';
 import 'package:exportsandchartsg8/pages/profile_page.dart';
+import 'package:exportsandchartsg8/utils/local_notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:open_file/open_file.dart';
@@ -233,6 +234,12 @@ class HomePage extends StatelessWidget {
                   );
                 },
                 child: Text("CHART 3"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  mostrarNotificacion();
+                },
+                child: Text("Mostrar local notification"),
               ),
             ],
           ),
